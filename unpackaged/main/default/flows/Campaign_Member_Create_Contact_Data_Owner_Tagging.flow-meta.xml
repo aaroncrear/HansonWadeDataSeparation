@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Notifies the team of a Fault</description>
+        <name>Fault_Update_Contact_Data_Owner_to_Shared</name>
+        <label>Fault - Update Contact Data Owner to Shared</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recipientAddresses</name>
+            <value>
+                <collectionElements>
+                    <stringValue>tech@hansonwade.com</stringValue>
+                </collectionElements>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <inputConfiguratorMode>Custom</inputConfiguratorMode>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <inputConfiguratorMode>Custom</inputConfiguratorMode>
+                <stringValue>digital.systems@hansonwade.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>composeEmailContent</name>
+            <value>
+                <stringValue>True</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Salesforce Flow Fault - Update Contact Data Owner to Shared</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <inputConfiguratorMode>Custom</inputConfiguratorMode>
+                <stringValue>&lt;p&gt;&lt;span style=&quot;background: rgb(20, 20, 20) !important;&quot;&gt;You&apos;re receiving this message becasue the Campaign Member - Create - Contact Data Owner Tagging Flow encountered a Fault Path. This occured at the Update Contact Data Owner to Shared Element and is related to:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background: rgb(20, 20, 20) !important;&quot;&gt;Object: Campaign Member&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background: rgb(20, 20, 20) !important;&quot;&gt;Record ID: {!$Record.Id}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Username: {!$User.Username}&lt;/p&gt;&lt;p&gt;Fault Message:&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+        <versionString>2.0.1</versionString>
+    </actionCalls>
+    <apiVersion>66.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Looks at the record type of the Parent Campaign</description>
+        <name>Is_Parent_Campaign_Beacon</name>
+        <label>Is Parent Campaign Beacon?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Beacon_Campaign</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Campaign.Parent.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Database</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Campaign.Parent.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Market_Research</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Contact_Data_Owner_to_Shared</targetReference>
+            </connector>
+            <label>Yes - Beacon Campaign</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Looks at the record type of the Parent Campaign</description>
+        <name>Is_Parent_Campaign_Conferences</name>
+        <label>Is Parent Campaign Conferences?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Conferences_Campaign</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Campaign.Parent.RecordType.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Database</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Campaign.Parent.RecordType.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Market_Research</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Contact_Data_Owner_to_Shared</targetReference>
+            </connector>
+            <label>Yes - Conferences Campaign</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Used to bypass parts of logic path</description>
+        <name>What_is_the_Contact_Data_Owner</name>
+        <label>What is the Contact Data Owner?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Conferences</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Contact.Data_Owner__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Conferences</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_Parent_Campaign_Beacon</targetReference>
+            </connector>
+            <label>Conferences</label>
+        </rules>
+        <rules>
+            <name>Beacon</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Contact.Data_Owner__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Beacon</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_Parent_Campaign_Conferences</targetReference>
+            </connector>
+            <label>Beacon</label>
+        </rules>
+    </decisions>
+    <description>This will update the Data Owner field on the related Contact based on criteria. This field is used in Sharing Rules to control record visibility. This was added as part of the data separation project. Ths Flow runs after the Campaign Member - Lead Flow Router
+Flow.</description>
+    <environments>Default</environments>
+    <interviewLabel>Campaign Member - Create - Contact Data Owner Tagging {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Campaign Member - Create - Contact Data Owner Tagging</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Sets the Data Owner field on the Contact to Shared</description>
+        <name>Update_Contact_Data_Owner_to_Shared</name>
+        <label>Update Contact Data Owner to Shared</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <faultConnector>
+            <targetReference>Fault_Update_Contact_Data_Owner_to_Shared</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ContactId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Data_Owner__c</field>
+            <value>
+                <stringValue>Shared</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Contact</object>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>What_is_the_Contact_Data_Owner</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ContactId</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>CampaignMember</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <triggerOrder>2</triggerOrder>
+</Flow>
