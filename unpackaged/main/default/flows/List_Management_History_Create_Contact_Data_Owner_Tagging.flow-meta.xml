@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Notifies the team of a Fault</description>
+        <name>Fault_Update_Contact_Data_Owner_to_Shared</name>
+        <label>Fault - Update Contact Data Owner to Shared</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recipientAddresses</name>
+            <value>
+                <collectionElements>
+                    <stringValue>tech@hansonwade.com</stringValue>
+                </collectionElements>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <inputConfiguratorMode>Custom</inputConfiguratorMode>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <inputConfiguratorMode>Custom</inputConfiguratorMode>
+                <stringValue>digital.systems@hansonwade.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>composeEmailContent</name>
+            <value>
+                <stringValue>True</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Salesforce User Issue - Fault - Update Contact Data Owner to Shared</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <inputConfiguratorMode>Custom</inputConfiguratorMode>
+                <stringValue>&lt;p&gt;You&apos;re receiving this message becasue the List Management History - Create - Contact Data Owner Tagging Flow encountered a Fault Path. This occured at the Update Contact Data Owner to Shared Element and is related to:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Object: List History Management&lt;/p&gt;&lt;p&gt;Record ID: {!$Record.Id}&lt;/p&gt;&lt;p&gt;Username: {!$User.Username}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+        <versionString>2.0.1</versionString>
+    </actionCalls>
+    <apiVersion>66.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Lokks at the record type of the Campaign and Parent Campaign on the List Management.</description>
+        <name>Is_Related_to_Beacon_Campaign</name>
+        <label>Is Related to Beacon Campaign?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Beacon_Campaign</name>
+            <conditionLogic>((1 OR 2) AND 3) OR ((4 OR 5) AND 6)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.List_Management__r.Parent_Campaign__r.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Database</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.List_Management__r.Parent_Campaign__r.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Market_Research</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.List_Management__r.Parent_Campaign__r.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Parent Campaign</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.List_Management__r.Parent_Campaign__r.Parent.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Database</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.List_Management__r.Parent_Campaign__r.Parent.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Market_Research</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.List_Management__r.Parent_Campaign__r.Parent.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Parent Campaign</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Contact_Data_Owner_to_Shared</targetReference>
+            </connector>
+            <label>Yes - Beacon Campaign</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Lokks at the record type of the Campaign and Parent Campaign on the List Management.</description>
+        <name>Is_Related_to_Conferences_Campaign</name>
+        <label>Is Related to Conferences Campaign?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Conferences_Campaign</name>
+            <conditionLogic>(1 AND 2 AND 3) OR (4 AND 5 AND 6)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.List_Management__r.Parent_Campaign__r.RecordType.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Database</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.List_Management__r.Parent_Campaign__r.RecordType.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Market_Research</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.List_Management__r.Parent_Campaign__r.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Parent Campaign</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.List_Management__r.Parent_Campaign__r.Parent.RecordType.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Database</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.List_Management__r.Parent_Campaign__r.Parent.RecordType.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Market_Research</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.List_Management__r.Parent_Campaign__r.Parent.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Parent Campaign</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Contact_Data_Owner_to_Shared</targetReference>
+            </connector>
+            <label>Yes - Conferences Campaign</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Used to bypass parts of logic path</description>
+        <name>What_is_the_Contact_Data_Owner</name>
+        <label>What is the Contact Data Owner?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Update_Contact_Data_Owner_to_Shared</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Conferences</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Contact__r.Data_Owner__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Conferences</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_Related_to_Beacon_Campaign</targetReference>
+            </connector>
+            <label>Conferences</label>
+        </rules>
+        <rules>
+            <name>Beacon</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Contact__r.Data_Owner__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Beacon</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_Related_to_Conferences_Campaign</targetReference>
+            </connector>
+            <label>Beacon</label>
+        </rules>
+    </decisions>
+    <description>This will update the Data Owner field on the related Contact based on criteria. This field is used in Sharing Rules to control record visibility. This was added as part of the data separation project.</description>
+    <environments>Default</environments>
+    <interviewLabel>List Management History - Create - Contact Data Owner Tagging {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>List Management History - Create - Contact Data Owner Tagging</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Sets the Data Owner field on the Contact to Shared</description>
+        <name>Update_Contact_Data_Owner_to_Shared</name>
+        <label>Update Contact Data Owner to Shared</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <faultConnector>
+            <targetReference>Fault_Update_Contact_Data_Owner_to_Shared</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Contact__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Data_Owner__c</field>
+            <value>
+                <stringValue>Shared</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Contact</object>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>What_is_the_Contact_Data_Owner</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>{26524}-Secondary- Landscape-{ CRISPR Engineered Cell Lines/Animal Model Develop</stringValue>
+            </value>
+        </filters>
+        <object>List_Management_History__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>

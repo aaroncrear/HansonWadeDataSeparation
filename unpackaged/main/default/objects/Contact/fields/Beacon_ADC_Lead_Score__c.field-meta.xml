@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Beacon_ADC_Lead_Score__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Displays the Marketo-generated lead score for Beacon ADC prospects, based on engagement, behaviour, and fit criteria. 100+ represents a high priority lead</inlineHelpText>
+    <label>Beacon - ADC - Lead Score</label>
+    <precision>3</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>
