@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Campaign_Share_with_Beacon_Data_Group</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>If the Date Owner field value is Beacon or Shared, share with the Beacon Data Public Group</description>
+        <label>Campaign - Share with Beacon Data Group</label>
+        <sharedTo>
+            <group>Beacon_Data</group>
+        </sharedTo>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <criteriaItems>
+            <field>Data_Owner__c</field>
+            <operation>equals</operation>
+            <value>Beacon</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Data_Owner__c</field>
+            <operation>equals</operation>
+            <value>Shared</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Campaign_Share_with_Conferences_Data_Group</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>If the Date Owner field value is Conferences or Shared, share with the Conferences Data Public Group</description>
+        <label>Campaign - Share with Conferences Data Group</label>
+        <sharedTo>
+            <group>Conferences_Data</group>
+        </sharedTo>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <criteriaItems>
+            <field>Data_Owner__c</field>
+            <operation>equals</operation>
+            <value>Conferences</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Data_Owner__c</field>
+            <operation>equals</operation>
+            <value>Shared</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+</SharingRules>
