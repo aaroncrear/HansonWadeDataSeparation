@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Data_Owner__c</fullName>
+    <description>This is used in Sharing Rules to control record visibility. It is part of the data separation project.</description>
+    <label>Data Owner</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>Data_Owner</valueSetName>
+    </valueSet>
+</CustomField>
