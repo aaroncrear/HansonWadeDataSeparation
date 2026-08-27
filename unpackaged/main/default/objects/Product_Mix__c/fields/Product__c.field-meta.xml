@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Allows a Spex user to select which unique product will be presented to a customer on the iNetSuite invoice.</description>
+    <inlineHelpText>Allows a Spex user to select which unique product will be presented to a customer on the iNetSuite invoice.</inlineHelpText>
+    <label>Product</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Product2.Description</field>
+            <operation>equals</operation>
+            <value>Spex Deal</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Product2</referenceTo>
+    <relationshipLabel>Product Mix</relationshipLabel>
+    <relationshipName>Product_Mix</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

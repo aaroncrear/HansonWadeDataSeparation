@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>To be used by automations as a referential to work out which Price Book goes where.</description>
+    <label>Price Book Selector</label>
+    <pluralLabel>Price Books Selector</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

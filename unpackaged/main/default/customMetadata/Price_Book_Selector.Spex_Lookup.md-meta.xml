@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Spex Lookup</label>
+    <protected>false</protected>
+    <values>
+        <field>Opportunity_Record_Type__c</field>
+        <value xsi:type="xsd:string">Spex Opportunity</value>
+    </values>
+    <values>
+        <field>Price_Book_ID__c</field>
+        <value xsi:type="xsd:string">01sTi0000016IzNIAU</value>
+    </values>
+    <values>
+        <field>Price_Book_Name__c</field>
+        <value xsi:type="xsd:string">Spex Price Book - For Invoicing</value>
+    </values>
+</CustomMetadata>
