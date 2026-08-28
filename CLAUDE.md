@@ -6,7 +6,7 @@ Salesforce metadata for the HansonWade org (`unpackaged/main/default/...`), depl
 
 Every feature branch must include a release notes file at the root of the branch, built from `Release_Notes_Template.docx` (also at the repo root). Do not invent a different format — copy the template and fill it in.
 
-**File name:** `'<Branch Name>' - Release Notes.docx`, where `<Branch Name>` is the actual branch name (`/` replaced with `-`, since `/` isn't valid in a filename). Example: for branch `claude/htt-42155-jsmo8z`, the file is `'claude-htt-42155-jsmo8z' - Release Notes.docx`, literal quotes included. Do not use a generic name like `Release_Notes.docx` — each branch's file must be individually named so it's identifiable on sight.
+**File name:** `<Branch Name> - Release Notes.docx`, where `<Branch Name>` is the actual branch name (`/` replaced with `-`, since `/` isn't valid in a filename). Example: for branch `claude/htt-42155-jsmo8z`, the file is `claude-htt-42155-jsmo8z - Release Notes.docx`. Do not use a generic name like `Release_Notes.docx` — each branch's file must be individually named so it's identifiable on sight.
 
 Sections, in order:
 
